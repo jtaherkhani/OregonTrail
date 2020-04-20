@@ -11,16 +11,25 @@ Not required, but highly recommended to download Visual Studio 2019 Preview -
 (https://visualstudio.microsoft.com/vs/preview/) as of 2020/04/20 this is the only way to debug the OregonTrail.UI.Client project.
 
 ### Setup
-In the OregonTrail.UI.Server project navigate to the appsettings.json
+In the OregonTrail.UI.Server project create a new JSON Configuration file > "appsettings.json"
 Update the blank "AzureStorage" connection string with the one provided from azure:
 ```
 "ConnectionStrings": {
-  "AzureStorage":"DefaultEndpointsProtocol=https;AccountName={your account name};AccountKey={your account key};EndpointSuffix=core.windows.net"
+  "AzureStorage":""
   },
+  
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*"
 ```
 
-In the OregonTrail.Data project navigate to the data_appsettings.json
-Update the "{}" sections with your information. The initial catalog should be called "OregonTrail" to run as expected.
+In the OregonTrail.Data project create a new JSON configuration file > "data_appsettings.json"
+Update the "{}" sections with your information. The initial catalog should be called "OregonTrail" for the migrations to run as expected.
 ```
 "ConnectionStrings": {
     "AzureConnection": "Server={your server};Initial Catalog=OregonTrail;Persist Security Info=False;User ID={your user id};Password={your password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
