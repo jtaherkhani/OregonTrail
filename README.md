@@ -32,7 +32,7 @@ Open Package Manager Console with the project 'OregonTrail.Data' selected and ru
 update-database
 ```
 
-You should be good to open the website!
+You should be good to open the website by starting the OregonTrail.UI.Server project!
 
 ### Functionality
 Functionality only exists in the /items razor page where the user can Create/View/Edit the Items in their Azure database.
