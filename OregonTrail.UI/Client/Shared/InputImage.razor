@@ -1,0 +1,33 @@
+﻿@inherits InputImageCode
+
+<div>
+    <div>
+        <h3>@Label</h3>
+        <div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="file" @ref="InputElement" @onchange="ImageFileSelected" accept=".png" />
+                </div>
+                <div class="col-md-6">
+                    <p><em><small>The image uploaded must be a .png and will be displayed in the mobile app, the recommended resolution is 640 by 320.</small></em></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (ImageURL != null)
+{
+    <div>
+        <div style="margin:10px">
+            <RadzenImage Path="@ImageURL" style="width: 640px; height: 320px;" />
+        </div>
+    </div>
+}
+else if (ImageBase64 != null)
+{
+    <div>
+        <div style="margin:10px">
+            <img src="data:image/jpeg;base64, @ImageBase64" style="width: 640px; height: 320px;" />
+        </div>
+    </div>
+}

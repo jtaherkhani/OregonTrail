@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OregonTrail.Data", "OregonTrail.Data\OregonTrail.Data.csproj", "{F22415AA-C126-4D41-A234-0554C40C9C12}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OregonTrail.UI.Server", "OregonTrail.UI\Server\OregonTrail.UI.Server.csproj", "{A981A88A-AFEB-42A4-960F-11D473DD84BB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OregonTrail.UI.Client", "OregonTrail.UI\Client\OregonTrail.UI.Client.csproj", "{35606591-8092-4D80-A412-A45AF109F8B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OregonTrail.UI.Shared", "OregonTrail.UI\Shared\OregonTrail.UI.Shared.csproj", "{328E0F88-6CFC-45ED-BFAE-6E2F54FE8BC0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OregonTrail.Models", "OregonTrail.Models\OregonTrail.Models.csproj", "{734724A5-6425-4AC6-B331-AA7D18F25225}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4FBD619A-303B-486E-9F53-2857534D6780}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OregonTrail.Utilities", "OregonTrail.Utilities\OregonTrail.Utilities.csproj", "{E201BAA5-0862-42C7-9D07-6F329BACFD57}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F22415AA-C126-4D41-A234-0554C40C9C12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F22415AA-C126-4D41-A234-0554C40C9C12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F22415AA-C126-4D41-A234-0554C40C9C12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F22415AA-C126-4D41-A234-0554C40C9C12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A981A88A-AFEB-42A4-960F-11D473DD84BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A981A88A-AFEB-42A4-960F-11D473DD84BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A981A88A-AFEB-42A4-960F-11D473DD84BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A981A88A-AFEB-42A4-960F-11D473DD84BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35606591-8092-4D80-A412-A45AF109F8B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35606591-8092-4D80-A412-A45AF109F8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35606591-8092-4D80-A412-A45AF109F8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35606591-8092-4D80-A412-A45AF109F8B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{328E0F88-6CFC-45ED-BFAE-6E2F54FE8BC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{328E0F88-6CFC-45ED-BFAE-6E2F54FE8BC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{328E0F88-6CFC-45ED-BFAE-6E2F54FE8BC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{328E0F88-6CFC-45ED-BFAE-6E2F54FE8BC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{734724A5-6425-4AC6-B331-AA7D18F25225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{734724A5-6425-4AC6-B331-AA7D18F25225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{734724A5-6425-4AC6-B331-AA7D18F25225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{734724A5-6425-4AC6-B331-AA7D18F25225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E201BAA5-0862-42C7-9D07-6F329BACFD57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E201BAA5-0862-42C7-9D07-6F329BACFD57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E201BAA5-0862-42C7-9D07-6F329BACFD57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E201BAA5-0862-42C7-9D07-6F329BACFD57}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C1C0D573-ACDD-408A-8820-CC9F1B198A94}
+	EndGlobalSection
+EndGlobal
