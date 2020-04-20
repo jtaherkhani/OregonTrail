@@ -3,8 +3,6 @@
 @using OregonTrail.Models
 @page "/items"
 
-<h1>Items</h1>
-
 @if (items == null)
 {
     <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 20px" />
@@ -14,7 +12,11 @@ else
     <RadzenButton Click="NewItem" Text="New"  Icon="add_circle" Style="background-color:forestgreen" />
     <RadzenGrid Count="@items.Count" Data="@items" TItem="Item" PageSize="@PaginationDTO.RecordsPerPage" AllowPaging="true" AllowFiltering="true" AllowSorting="true">
         <Columns>
-            <RadzenGridColumn TItem="Item" Property="Name" Title="Name" />
+            <RadzenGridColumn TItem="Item" Property="Name" Title="Name">
+                <FooterTemplate>
+                    Total items: <b>@items.Count()</b>
+                </FooterTemplate>
+            </RadzenGridColumn>
             <RadzenGridColumn TItem="Item" Property="Image" Title="Image" Sortable="false" Filterable="false" Width="640px">
                 <Template Context="data">
                     <RadzenImage Path="@data?.Image" />
