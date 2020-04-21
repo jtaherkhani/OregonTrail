@@ -1,32 +1,35 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@inherits NavMenuCode
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">OregonTrail.UI</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="items">
-                <span class="oi oi-plus" aria-hidden="true"></span> Items
-            </NavLink>
-        </li>
-    </ul>
-</div>
 
-@code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
+<RadzenSidebar @bind-Expanded="@collapseNavMenu">
+    <ChildContent>
+        <!--
+    <div style="padding: 1rem">
+        <span style="width: 100%" class="ui-autocomplete ui-widget">
+            <input placeholder="Find..." class="ui-inputtext ui-widget ui-state-default ui-corner-all ui-autocomplete-input" type="search" @oninput="@FilterPanelMenu" />
+        </span>
+    </div>
+        -->
+        <RadzenPanelMenu>
+            @foreach (var menuItem in MenuItems)
+            {
+                <RadzenPanelMenuItem @bind-Expanded ="@menuItem.ExpandedByDefault" Text="@menuItem.Text" Path="@menuItem.URL" Icon="@menuItem.IconClass">
+                    @if (menuItem.SubMenuItems != null)
+                    {
+                        @foreach (var subMenuItem in menuItem.SubMenuItems)
+                        {
+                            <RadzenPanelMenuItem Text="@subMenuItem.Text" Path="@subMenuItem.URL" Icon="@subMenuItem.IconClass" />
+                        }
+                    }
+                </RadzenPanelMenuItem>
+            }
+        </RadzenPanelMenu>
+    </ChildContent>
+</RadzenSidebar>

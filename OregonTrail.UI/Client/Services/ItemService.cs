@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OregonTrail.UI.Client.Services
 {
-    public class ItemService : Service
+    public class ItemService : ServerService
     {
         public ItemService(HttpClient httpClient)
             : base(httpClient)

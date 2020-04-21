@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 namespace OregonTrail.UI.Client.Services
 {
     /// <summary>
-    /// Defines the service framework classes that are required in each implementation.
+    /// Defines the service framework class utilized to speak to the server.
     /// </summary>
-    public class Service
+    public class ServerService
     {
         public HttpClient Client { get; } // publicly accessible read-only client.
         protected Uri ControllerUri; // Uri for the specific controller
 
-        public Service(HttpClient httpClient)
+        public ServerService(HttpClient httpClient)
         {
             Client = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
