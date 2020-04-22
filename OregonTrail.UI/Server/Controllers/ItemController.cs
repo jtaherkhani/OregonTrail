@@ -49,8 +49,8 @@ namespace OregonTrail.UI.Server.Controllers
             return await DataService.SaveItem(item);
         }
 
-        [HttpDelete]
-        public async Task DeleteItem(Item item)
+        [HttpPost]
+        public async Task<ActionResult<string>> DeleteItem(Item item)
         {
             if (item == null)
             {
@@ -62,7 +62,7 @@ namespace OregonTrail.UI.Server.Controllers
                 await StorageService.DeleteFile(item.Image, "items");
             }
 
-            await DataService.DeleteItem(item);
+            return await DataService.DeleteItem(item);
         }
     }
 }

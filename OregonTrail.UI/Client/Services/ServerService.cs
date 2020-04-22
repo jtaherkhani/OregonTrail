@@ -32,13 +32,13 @@ namespace OregonTrail.UI.Client.Services
                 throw new ArgumentNullException(nameof(responseMessage));
             }
 
-            var json = await responseMessage.Content.ReadAsStringAsync();
-
             if (!responseMessage.IsSuccessStatusCode)
             {
                 //todo: implement sweet alerts here
-                throw new ApplicationException(json);
+                throw new ApplicationException();
             }
+
+            var json = await responseMessage.Content.ReadAsStringAsync();
 
             //todo: consider throwing custom errors here once solution becomes more robust
             return json;
@@ -82,11 +82,12 @@ namespace OregonTrail.UI.Client.Services
         }
 
         /// <summary>
-        /// Abstraction of http post request structure to ensure the parse response is always called
+        /// Abstraction of http post request structure to ensure the parse response is always called.
         /// </summary>
+        /// <typeparam name="T">Denotes the content sent to the server.</typeparam>
         /// <param name="actionPath">The api path excluding the initial controller path.</param>
-        /// <param name="content">The generic content for the post request.</param>
-        /// <returns>The parsed json that will then be deserialized by the caller</returns>
+        /// <param name="content">The content for the post request.</param>
+        /// <returns>The parsed json in the httpResponse.</returns>
         protected async Task<string> Post<T>(string actionPath, T content)
         {
             var builder = CreateUriBuilder(actionPath);

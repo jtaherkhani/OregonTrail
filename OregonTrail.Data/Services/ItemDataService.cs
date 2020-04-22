@@ -75,7 +75,7 @@ namespace OregonTrail.Data.Services
         /// </summary>
         /// <param name="itemToDelete">Item to be deleted from the database.</param>
         /// <returns>A task representing the deletion of the item.</returns>
-        public async Task DeleteItem(Item itemToDelete)
+        public async Task<string> DeleteItem(Item itemToDelete)
         {
             if (itemToDelete == null)
             {
@@ -84,6 +84,7 @@ namespace OregonTrail.Data.Services
 
             context.Remove(itemToDelete);
             await context.SaveChangesAsync();
+            return itemToDelete.Name;
         }
     }
 }
