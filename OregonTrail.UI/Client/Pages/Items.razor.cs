@@ -1,6 +1,6 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
-using OregonTrail.Models;
+using OregonTrail.Models.Shared;
 using OregonTrail.UI.Client.Helpers;
 using OregonTrail.UI.Client.Pages.Modals;
 using OregonTrail.UI.Client.Services;
@@ -25,7 +25,7 @@ namespace OregonTrail.UI.Client.Pages
         [Inject]
         public ItemService ItemService { get; set; }
 
-        public PaginationDTO PaginationDTO = new PaginationDTO(); 
+        public PaginationRequstDTO PaginationDTO = new PaginationRequstDTO(); // Todo: Should utilize the underlying constant not the pagination request/result.
         public List<Item> items;
 
         protected override async Task OnInitializedAsync() // todo: try after render to see if it's more performant?

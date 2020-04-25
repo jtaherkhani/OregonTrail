@@ -1,0 +1,26 @@
+﻿@inherits UsersCode
+@using Radzen
+@using OregonTrail.Models.Shared
+@using OregonTrail.Models.Shared.Enums 
+@page "/users"
+
+@if (users == null)
+{
+    <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 20px" />
+}
+else
+{
+    <RadzenGrid Count="@totalUsers" Data="@filteredUsers" TItem="UserRoleView" PageSize="10" AllowPaging="true" AllowFiltering="true" AllowSorting="true">
+        <Columns>
+            <RadzenGridColumn TItem="UserRoleView" Property="UserName" Title="User Name" />
+            <RadzenGridColumn TItem="UserRoleView" Property="Email" Title="Email" />
+            <RadzenGridColumn TItem="UserRoleView" Property="Role" Title="Role">
+                <FilterTemplate>
+                    <RadzenDropDown Change="@(args => ChangeRoleDropDown(args))" @bind-Value="@CurrentRole" TextProperty="Text" ValueProperty="Value" Style="width:100%"
+                                    Data="GetRoleDropDown()" />
+
+                </FilterTemplate>
+            </RadzenGridColumn>
+        </Columns>
+    </RadzenGrid>
+}

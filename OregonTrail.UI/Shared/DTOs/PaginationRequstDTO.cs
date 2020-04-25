@@ -7,7 +7,7 @@ namespace OregonTrail.UI.Shared.DTOs
     /// <summary>
     /// Data transfer object to handle the pagination definition between the server and client.
     /// </summary>
-    public class PaginationDTO
+    public class PaginationRequstDTO
     {
         private const int DefaultRecordsPerPage = 10; // todo: move into a constant project
 

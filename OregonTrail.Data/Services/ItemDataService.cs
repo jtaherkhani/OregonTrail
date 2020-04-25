@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using OregonTrail.Data.Context;
-using OregonTrail.Models;
+using OregonTrail.Models.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace OregonTrail.Data.Services

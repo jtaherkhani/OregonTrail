@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using OregonTrail.Models;
+using OregonTrail.Models.Shared;
 using System.Threading.Tasks;
 using Radzen;
 

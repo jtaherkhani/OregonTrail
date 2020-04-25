@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using OregonTrail.Models;
+using OregonTrail.Models.Shared;
 using System.Threading.Tasks;
 
 namespace OregonTrail.UI.Client.Services

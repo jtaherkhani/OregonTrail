@@ -27,6 +27,7 @@ namespace OregonTrail.UI.Client
         private static void ConfigureServices(IServiceCollection services)
         {
             services.AddBaseAddressHttpClient();
+            services.AddApiAuthorization();
             services.AddFileReaderService();
             services.AddSweetAlert2(options => {
                 options.Theme = SweetAlertTheme.Bootstrap4; // map the sweet alert theme to bootstrap
@@ -34,6 +35,7 @@ namespace OregonTrail.UI.Client
 
             services.AddScoped<ItemService>();
             services.AddScoped<DialogService>();
+            services.AddScoped<UserService>();
         }
     }
 }

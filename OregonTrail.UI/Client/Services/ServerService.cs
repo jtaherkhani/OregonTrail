@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using OregonTrail.UI.Shared.DTOs;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
@@ -76,6 +78,22 @@ namespace OregonTrail.UI.Client.Services
         protected async Task<string> Get(string actionPath)
         {
             var builder = CreateUriBuilder(actionPath);
+
+            var httpResponse = await Client.GetAsync(builder.Uri);
+            return await ParseResponse(httpResponse);
+        }
+
+        protected async Task<string> GetPaginated(string actionPath, PaginationRequstDTO requestDTO)
+        {
+            var builder = CreateUriBuilder(actionPath);
+
+            using var content = new FormUrlEncodedContent(new Dictionary<string, string>()
+            {
+                { "Page", requestDTO.Page.ToString() },
+                { "RecordsPerPage", requestDTO.RecordsPerPage.ToString()}
+            });
+
+            builder.Query = content.ReadAsStringAsync().Result;
 
             var httpResponse = await Client.GetAsync(builder.Uri);
             return await ParseResponse(httpResponse);

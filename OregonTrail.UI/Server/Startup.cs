@@ -1,13 +1,14 @@
 using OregonTrail.Data.Context;
 using OregonTrail.UI.Server.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 
 namespace OregonTrail.UI.Server
 {
@@ -26,7 +27,29 @@ namespace OregonTrail.UI.Server
         {
             services.AddScoped<IFileStorageService, AzureStorageService>();
             services.AddDbContext<OregonTrailDBContext>();
+            
+            // Expand the database to include security
+            services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false; // todo: Change this back before production
+            })
+               .AddRoles<IdentityRole>()
+               .AddEntityFrameworkStores<OregonTrailDBContext>();
+
+            services.AddIdentityServer()
+                 .AddApiAuthorization<IdentityUser, OregonTrailDBContext>();
+
+            services.AddAuthentication()
+                .AddIdentityServerJwt();
+
+            // creating a simple server options extension to configure our Jwt to require HTTPS (more will need to come later when we publish to azure.
+            services.Configure<JwtBearerOptions>(IdentityServerJwtConstants.IdentityServerJwtBearerScheme, options => 
+            {
+                options.RequireHttpsMetadata = true;
+            });
+
             services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,8 +73,13 @@ namespace OregonTrail.UI.Server
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseIdentityServer();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages(); // razor pages for authentication are mapped to the server
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
             });

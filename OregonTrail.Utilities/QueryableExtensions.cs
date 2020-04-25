@@ -16,7 +16,7 @@ namespace OregonTrail.Utilities
         /// <param name="queryable">The queryable.</param>
         /// <param name="paginationDTO">The pagination data transfer object that defines pagination rules.</param>
         /// <returns></returns>
-        public static IQueryable<T> Paginate<T>(this IQueryable<T> queryable, PaginationDTO paginationDTO)
+        public static IQueryable<T> Paginate<T>(this IQueryable<T> queryable, PaginationRequstDTO paginationDTO)
         {
             var recordsToSkip = (paginationDTO.Page - 1) * paginationDTO.RecordsPerPage;
 

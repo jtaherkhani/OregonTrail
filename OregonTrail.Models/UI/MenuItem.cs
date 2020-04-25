@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace OregonTrail.UI.Client.Models
+namespace OregonTrail.Models.UI
 {
     /// <summary>
     /// Defines naviagatible menu items displayed to the website.

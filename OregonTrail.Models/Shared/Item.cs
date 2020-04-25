@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OregonTrail.Models
+namespace OregonTrail.Models.Shared
 {
     /// <summary>
     /// Stores item references for the game.

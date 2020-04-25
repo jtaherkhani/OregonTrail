@@ -1,4 +1,4 @@
-﻿using OregonTrail.UI.Client.Models;
+﻿using OregonTrail.Models.UI;
 using System.Collections.Generic;
 
 namespace OregonTrail.UI.Client.Helpers
@@ -24,7 +24,8 @@ namespace OregonTrail.UI.Client.Helpers
                     URL="/"
                 },
 
-                CreateInventoryNaviagtion()
+                CreateInventoryNaviagtion(),
+                CreateUserNavgation()
             };
         }
 
@@ -47,6 +48,20 @@ namespace OregonTrail.UI.Client.Helpers
                         URL = "/items"
                     }
                 }
+            };
+        }
+
+        /// <summary>
+        /// Creates the User menu item.
+        /// </summary>
+        /// <returns></returns>
+        private static MenuItem CreateUserNavgation()
+        {
+            return new MenuItem()
+            {
+                Text = "Users",
+                IconClass = "supervisor_account",
+                URL = "Users"
             };
         }
     }

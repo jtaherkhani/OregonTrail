@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using OregonTrail.UI.Client.Helpers;
-using OregonTrail.UI.Client.Models;
+using OregonTrail.Models.UI;
 using System.Collections.Generic;
 
 namespace OregonTrail.UI.Client.Shared

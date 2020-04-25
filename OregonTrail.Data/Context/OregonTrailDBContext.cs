@@ -1,12 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using OregonTrail.Models;
+using Microsoft.Extensions.Options;
+using OregonTrail.Models.Shared;
+using OregonTrail.Models.Shared.Enums;
 using System;
 
 namespace OregonTrail.Data.Context
 {
-    public class OregonTrailDBContext : DbContext
+    public class OregonTrailDBContext : ApiAuthorizationDbContext<IdentityUser>
     {
+
+        public OregonTrailDBContext(DbContextOptions<OregonTrailDBContext> options,
+            IOptions<OperationalStoreOptions> operationalStoreOptions)
+            : base(options, operationalStoreOptions)
+        {
+        }
+
         public virtual DbSet<Item> Items { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -20,6 +32,9 @@ namespace OregonTrail.Data.Context
                 var Configuration = builder.Build();
                 string connstr = Configuration.GetConnectionString("AzureConnection");
                 optionsBuilder.UseSqlServer(connstr);
+
+                // var options = Configuration.GetSection("Users");
+
             }
         }
 
@@ -30,13 +45,20 @@ namespace OregonTrail.Data.Context
                 throw new ArgumentNullException(nameof(modelBuilder));
             }
 
+            base.OnModelCreating(modelBuilder);
             SeedData(modelBuilder);
-
         }
         private void SeedData(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Item>().HasData(
-                new Item { Id = 1, Name = "dummy", Points = 10, Image = "DummyImage.jpg" });
+            SeedRoles(modelBuilder); // Seed roles based on the Role enum.
+        }
+
+        private void SeedRoles(ModelBuilder modelBuilder)
+        {
+            foreach (var roleName in Enum.GetNames(typeof(Role)))
+            {
+                modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = roleName, NormalizedName = roleName.ToUpper() });
+            }
         }
     }
 }
