@@ -1,4 +1,5 @@
 using OregonTrail.Data.Context;
+using OregonTrail.Models.Shared;
 using OregonTrail.UI.Server.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.Extensions.Options;
 
 namespace OregonTrail.UI.Server
 {
@@ -53,7 +55,7 @@ namespace OregonTrail.UI.Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -76,6 +78,11 @@ namespace OregonTrail.UI.Server
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+
+            // Create and bind options to configuration that will be used to seed data
+            AdminOptions options = new AdminOptions();
+            Configuration.GetSection("Admin").Bind(options);
+            OregonTrailDBInitializer.SeedIdentity(roleManager, userManager, options);
 
             app.UseEndpoints(endpoints =>
             {
