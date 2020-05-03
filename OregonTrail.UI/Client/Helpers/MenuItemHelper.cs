@@ -45,7 +45,7 @@ namespace OregonTrail.UI.Client.Helpers
                     new MenuItem()
                     {
                         Text = "Items",
-                        URL = "/items"
+                        URL = "items"
                     }
                 }
             };
@@ -61,7 +61,7 @@ namespace OregonTrail.UI.Client.Helpers
             {
                 Text = "Users",
                 IconClass = "supervisor_account",
-                URL = "Users"
+                URL = "users"
             };
         }
     }

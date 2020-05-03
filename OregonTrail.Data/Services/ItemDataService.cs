@@ -41,7 +41,7 @@ namespace OregonTrail.Data.Services
         /// </summary>
         /// <param name="item">Item to be added into the database.</param>
         /// <returns>The name of the created item.</returns>
-        public async Task<string> SaveItem(Item item)
+        public async Task<Item> SaveItem(Item item)
         {
             // Todo: Investigate if we can have more robust error handling here.
             if (item == null)
@@ -67,7 +67,7 @@ namespace OregonTrail.Data.Services
             }
 
             await context.SaveChangesAsync();
-            return item.Name;
+            return item;
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace OregonTrail.Data.Services
         /// </summary>
         /// <param name="itemToDelete">Item to be deleted from the database.</param>
         /// <returns>A task representing the deletion of the item.</returns>
-        public async Task<string> DeleteItem(Item itemToDelete)
+        public async Task<Item> DeleteItem(Item itemToDelete)
         {
             if (itemToDelete == null)
             {
@@ -84,7 +84,7 @@ namespace OregonTrail.Data.Services
 
             context.Remove(itemToDelete);
             await context.SaveChangesAsync();
-            return itemToDelete.Name;
+            return itemToDelete;
         }
     }
 }

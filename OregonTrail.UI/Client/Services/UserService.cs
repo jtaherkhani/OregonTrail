@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using OregonTrail.Models.Shared;
 using OregonTrail.UI.Shared.DTOs;
@@ -12,20 +13,24 @@ namespace OregonTrail.UI.Client.Services
 {
     public class UserService : ServerService
     {
-        public UserService(HttpClient httpClient)
-           : base(httpClient)
+        public UserService(HttpClient httpClient, SweetAlertService sweetAlertService)
+           : base(httpClient, sweetAlertService)
         {
             var builder = new UriBuilder(httpClient.BaseAddress);
             builder.Path += "api/User/";
             ControllerUri = builder.Uri;
         }
 
-        public async Task<PaginationResponseDTO<List<UserRoleView>>> GetPaginatedUserRoles(PaginationRequstDTO requestDTO)
+        public async Task<ControllerResponseDTO<List<UserRoleView>>> GetPaginatedUserRoles(PaginationRequstDTO requestDTO)
         {
             var path = "GetPaginatedUserRoles";
-            var json = await GetPaginated(path, requestDTO);
+            return await GetPaginated<List<UserRoleView>>(path, requestDTO);
+        }
 
-            return JsonConvert.DeserializeObject<PaginationResponseDTO<List<UserRoleView>>>(json);
+        public async Task<ControllerResponseDTO<UserRoleView>> DeleteUserFromUserRoleView(UserRoleView userRoleView)
+        {
+            var path = "DeleteUserByUserRoleView";
+            return await Post(path, userRoleView);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using CurrieTechnologies.Razor.SweetAlert2;
+using Newtonsoft.Json;
+using OregonTrail.UI.Client.Helpers;
 using OregonTrail.UI.Shared.DTOs;
 using System;
 using System.Collections.Generic;
@@ -16,10 +18,12 @@ namespace OregonTrail.UI.Client.Services
     {
         public HttpClient Client { get; } // publicly accessible read-only client.
         protected Uri ControllerUri; // Uri for the specific controller
+        private readonly SweetAlertService SweetAlertService;
 
-        public ServerService(HttpClient httpClient)
+        public ServerService(HttpClient httpClient, SweetAlertService sweetAlertService)
         {
             Client = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            SweetAlertService = sweetAlertService;
         }
 
         /// <summary>
@@ -27,7 +31,7 @@ namespace OregonTrail.UI.Client.Services
         /// </summary>
         /// <param name="responseMessage">The response from the server.</param>
         /// <returns>The response message.</returns>
-        private async Task<string> ParseResponse(HttpResponseMessage responseMessage)
+        private async Task<ControllerResponseDTO<T>> ParseResponse<T>(HttpResponseMessage responseMessage)
         {
             if (responseMessage == null)
             {
@@ -36,14 +40,22 @@ namespace OregonTrail.UI.Client.Services
 
             if (!responseMessage.IsSuccessStatusCode)
             {
-                //todo: implement sweet alerts here
-                throw new ApplicationException();
+                // if we fail here fire an unknown sweet alert and return with an empty controller response.
+                await SweetAlertService.FireAsync(AlertHelper.UnknownError());
+                return new ControllerResponseDTO<T>();
             }
-
+            
             var json = await responseMessage.Content.ReadAsStringAsync();
 
+            var controllerResponse = JsonConvert.DeserializeObject<ControllerResponseDTO<T>>(json);
+
+            if (controllerResponse.HasError)
+            {
+                await SweetAlertService.FireAsync(AlertHelper.ValidationError(controllerResponse.ErrorMessage));
+            }
+
             //todo: consider throwing custom errors here once solution becomes more robust
-            return json;
+            return controllerResponse;
         }
 
         private UriBuilder CreateUriBuilder(string actionPath)
@@ -75,15 +87,15 @@ namespace OregonTrail.UI.Client.Services
         /// </summary>
         /// <param name="actionPath">The api path excluding the initial controller path.</param>
         /// <returns>The parsed json that will then be deserialized by the caller.</returns>
-        protected async Task<string> Get(string actionPath)
+        protected async Task<ControllerResponseDTO<T>> Get<T>(string actionPath)
         {
             var builder = CreateUriBuilder(actionPath);
 
             var httpResponse = await Client.GetAsync(builder.Uri);
-            return await ParseResponse(httpResponse);
+            return await ParseResponse<T>(httpResponse);
         }
 
-        protected async Task<string> GetPaginated(string actionPath, PaginationRequstDTO requestDTO)
+        protected async Task<ControllerResponseDTO<T>> GetPaginated<T>(string actionPath, PaginationRequstDTO requestDTO)
         {
             var builder = CreateUriBuilder(actionPath);
 
@@ -96,7 +108,7 @@ namespace OregonTrail.UI.Client.Services
             builder.Query = content.ReadAsStringAsync().Result;
 
             var httpResponse = await Client.GetAsync(builder.Uri);
-            return await ParseResponse(httpResponse);
+            return await ParseResponse<T>(httpResponse);
         }
 
         /// <summary>
@@ -106,14 +118,15 @@ namespace OregonTrail.UI.Client.Services
         /// <param name="actionPath">The api path excluding the initial controller path.</param>
         /// <param name="content">The content for the post request.</param>
         /// <returns>The parsed json in the httpResponse.</returns>
-        protected async Task<string> Post<T>(string actionPath, T content)
+        protected async Task<ControllerResponseDTO<T>> Post<T>(string actionPath, T content)
         {
             var builder = CreateUriBuilder(actionPath);
 
             using var stringContent = CreateStringContent(content); // todo: investigate why this is a using command.
-
             var httpResponse = await Client.PostAsync(builder.Uri, stringContent);
-            return await ParseResponse(httpResponse);
+
+
+            return await ParseResponse<T>(httpResponse);
         }
     }
 }

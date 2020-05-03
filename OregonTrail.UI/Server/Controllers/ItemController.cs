@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using OregonTrail.UI.Shared.DTOs;
 
 namespace OregonTrail.UI.Server.Controllers
 {
@@ -23,13 +24,16 @@ namespace OregonTrail.UI.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Item>> GetItems()
+        public async Task<ControllerResponseDTO<List<Item>>> GetItems()
         {
-            return await DataService.GetItems();
+            return new ControllerResponseDTO<List<Item>>()
+            {
+                Content = await DataService.GetItems()
+            };
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> SaveItem(Item item)
+        public async Task<ControllerResponseDTO<ActionResult<Item>>> SaveItem(Item item)
         {
             if (item == null)
             {
@@ -44,11 +48,14 @@ namespace OregonTrail.UI.Server.Controllers
                 item.Image = await StorageService.SaveFile(itemImage, "png", "items"); // todo: allow for other file extensions.
             }
 
-            return await DataService.SaveItem(item);
+            return new ControllerResponseDTO<ActionResult<Item>>()
+            {
+                Content = await DataService.SaveItem(item)
+            };
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> DeleteItem(Item item)
+        public async Task<ControllerResponseDTO<ActionResult<Item>>> DeleteItem(Item item)
         {
             if (item == null)
             {
@@ -60,7 +67,10 @@ namespace OregonTrail.UI.Server.Controllers
                 await StorageService.DeleteFile(item.Image, "items");
             }
 
-            return await DataService.DeleteItem(item);
+            return new ControllerResponseDTO<ActionResult<Item>>()
+            { 
+                Content = await DataService.DeleteItem(item)
+            };
         }
     }
 }

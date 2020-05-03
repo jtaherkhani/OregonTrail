@@ -1,0 +1,21 @@
+﻿@inherits InviteUserModalCode
+
+<EditForm Model="NewUserInvite" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+    <RadzenFieldset Text="User Details">
+        <div class="row">
+            <div class="row">
+                <div class="col-md-10">
+                    <h3>Email Address</h3>
+                    <RadzenTextBox @bind-Value="NewUserInvite.EmailAddress" Style="margin-bottom: 20px" />
+                    <ValidationMessage For="() => NewUserInvite.EmailAddress" />
+                </div>
+            </div>
+        </div>
+    </RadzenFieldset>
+    <!--Include breaks after the final control before the button group-->
+    <div class="btn-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+    </div>
+</EditForm>

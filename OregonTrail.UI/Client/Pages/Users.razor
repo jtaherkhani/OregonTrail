@@ -1,7 +1,7 @@
 ﻿@inherits UsersCode
 @using Radzen
 @using OregonTrail.Models.Shared
-@using OregonTrail.Models.Shared.Enums 
+@using OregonTrail.Models.Shared.Enums
 @page "/users"
 
 @if (users == null)
@@ -10,6 +10,7 @@
 }
 else
 {
+    <RadzenButton Click="InviteUser" Text="New" Icon="add_circle" Style="background-color:forestgreen" />
     <RadzenGrid Count="@totalUsers" Data="@filteredUsers" TItem="UserRoleView" PageSize="10" AllowPaging="true" AllowFiltering="true" AllowSorting="true">
         <Columns>
             <RadzenGridColumn TItem="UserRoleView" Property="UserName" Title="User Name" />
@@ -18,8 +19,13 @@ else
                 <FilterTemplate>
                     <RadzenDropDown Change="@(args => ChangeRoleDropDown(args))" @bind-Value="@CurrentRole" TextProperty="Text" ValueProperty="Value" Style="width:100%"
                                     Data="GetRoleDropDown()" />
-
                 </FilterTemplate>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="UserRoleView" Context="data" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+                <Template Context="data">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Medium" Click="@(args => DeleteUser(data))">
+                    </RadzenButton>
+                </Template>
             </RadzenGridColumn>
         </Columns>
     </RadzenGrid>

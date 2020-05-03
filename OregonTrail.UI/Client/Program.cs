@@ -36,6 +36,7 @@ namespace OregonTrail.UI.Client
             services.AddScoped<ItemService>();
             services.AddScoped<DialogService>();
             services.AddScoped<UserService>();
+            services.AddScoped<UserInviteService>();
         }
     }
 }

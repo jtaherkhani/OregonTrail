@@ -23,8 +23,6 @@ namespace OregonTrail.UI.Server
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IFileStorageService, AzureStorageService>();
@@ -33,7 +31,7 @@ namespace OregonTrail.UI.Server
             // Expand the database to include security
             services.AddDefaultIdentity<IdentityUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = false; // todo: Change this back before production
+                options.User.RequireUniqueEmail = true; // This ensures that our email confirmation will always find a unique email address.
             })
                .AddRoles<IdentityRole>()
                .AddEntityFrameworkStores<OregonTrailDBContext>();
@@ -49,6 +47,9 @@ namespace OregonTrail.UI.Server
             {
                 options.RequireHttpsMetadata = true;
             });
+
+            services.Configure<SendGridOptions>(
+                Configuration.GetSection("SendGrid"));
 
             services.AddControllersWithViews();
             services.AddRazorPages();

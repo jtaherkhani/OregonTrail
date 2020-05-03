@@ -30,5 +30,24 @@ namespace OregonTrail.UI.Client.Helpers
                 ShowCancelButton = true,
             };
         }
+
+        public static SweetAlertOptions UnknownError()
+        {
+            return new SweetAlertOptions()
+            {
+                Title = "Unknown error has occurred in communication with the server, please try again.",
+                Icon = SweetAlertIcon.Error,
+            };
+        }
+
+        public static SweetAlertOptions ValidationError(string titleError)
+        {
+            return new SweetAlertOptions()
+            { 
+                Title = titleError,
+                Icon = SweetAlertIcon.Error
+            };
+
+        }
     }
 }
