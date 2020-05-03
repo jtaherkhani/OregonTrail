@@ -6,26 +6,48 @@ Blazor WASM application used to assist History Colorado in their annual Oregon T
 https://portal.azure.com/
 1 storage account
 1 Azure SQL DB
+1 SendGrid acount
 
 Not required, but highly recommended to download Visual Studio 2019 Preview -
 (https://visualstudio.microsoft.com/vs/preview/) as of 2020/04/20 this is the only way to debug the OregonTrail.UI.Client project.
 
 ### Setup
 In the OregonTrail.UI.Server project create a new JSON Configuration file > "appsettings.json"
+
 Update the blank "AzureStorage" connection string with the one provided from azure:
 ```
 "ConnectionStrings": {
   "AzureStorage":""
+  }
+```
+To integrate with SendGrid utilize the SendGrid definition section of the new appsettings (some of these will require you to create the SendGrid account first):
+```
+"SendGrid": {
+    "APIKey": "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",
+    "TemplateId": "d-6d675b8fdf9c4ff69e0c0afbc43afcec",
+    "FromEmail": "no-reply@OregonTrailIRL.com"
   },
-  
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning",
-      "Microsoft.Hosting.Lifetime": "Information"
+```
+Setup the IdentityServer to recognize the client and that this is being ran as a development project:
+```
+  "IdentityServer": {
+    "Key": {
+      "Type": "Development"
+    },
+    "Clients": {
+      "OregonTrail.UI.Client": {
+        "Profile": "IdentityServerSPA"
+      }
     }
-  },
-  "AllowedHosts": "*"
+  }
+```
+If you want an Admin user to be populated at run-time to ensure at least one user has administrative access to the solution provide the following configuration section:
+```
+"Admin": {
+    "UserName": "",
+    "Password": "",
+    "Email": ""
+  }
 ```
 
 In the OregonTrail.Data project create a new JSON configuration file > "data_appsettings.json"
@@ -44,12 +66,25 @@ update-database
 You should be good to open the website by starting the OregonTrail.UI.Server project!
 
 ### Functionality
-Functionality only exists in the /items razor page where the user can Create/View/Edit the Items in their Azure database.
-The project as of 4/20/2020 utilizes the following blazor tools for visualization:
-https://blazor.radzen.com/ - 
-  DataGrid + dialogs representing modals + primarly css styling for buttons (backbone)
-https://www.nuget.org/packages/CurrieTechnologies.Blazor.SweetAlert2/0.1.4-preview - 
-  Toasting on successful item creation - might go to Blazored Toast in the future depending on user feedback
-  Alerts w/ confirmation on item deletion.
+Navigation from the home page to Items setup and User overview.
+These views still require styling but all CRUD actions on the items page have been mapped and are working as expected.
+Items page ->
+ 1) Toasts success
+ 2) Warns on deletion
+ 3) Modals for editing/inserting
+
+Users page ->
+ 1) Brings up a basic view model representing IdentityServer4 in a single table.
+ 2) Deletion of users - requires warning still.
+ 3) Invitation of new users (Utilizing SendGrid), will create email with basic format and URL to follow back to confirm on website.
+ 4) Navigation from confirmation email to new page with an OregonTrail logo.
+ 
+Roadmap ->
+ 1) Confirmation page finalization
+ 2) Expansion to other permutations to ensure confirmation is not a blocker
+ 3) Login Page
+ 4) Implementation of Authorization on pages + Server APIs (JWT tokens to carry forward the roles)
+ 5) Deploy as free Azure Web App to see if any complications need to be worked out
+
 
 Please reach out if you have any questions @taherkhanijosh@gmail.com  
