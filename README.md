@@ -23,9 +23,9 @@ Update the blank "AzureStorage" connection string with the one provided from azu
 To integrate with SendGrid utilize the SendGrid definition section of the new appsettings (some of these will require you to create the SendGrid account first):
 ```
 "SendGrid": {
-    "APIKey": "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",
-    "TemplateId": "d-6d675b8fdf9c4ff69e0c0afbc43afcec",
-    "FromEmail": "no-reply@OregonTrailIRL.com"
+    "APIKey": "",
+    "TemplateId": "",
+    "FromEmail": ""
   },
 ```
 Setup the IdentityServer to recognize the client and that this is being ran as a development project:
